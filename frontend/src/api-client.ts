@@ -18,3 +18,17 @@ export const register = async (formData: RegisterFormData) => {
     throw new Error(responseBody.message);
   }
 };
+
+export const validateToken = async () => {
+  const response = await fetch(`{API_BASE_URL}/api/auth/validate-token`, {
+    credentials: "include",
+  });
+
+  if (!response) {
+    throw new Error(
+      "Token is Invalid! You are Blocked from Site! Our Developer will be assigned to you as soon as possible"
+    );
+  }
+
+  return response.json();
+};
