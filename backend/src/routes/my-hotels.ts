@@ -2,6 +2,8 @@ import express, { Request, Response } from "express";
 import cloudinary from "cloudinary";
 import multer from "multer";
 import Hotel, { HotelType } from "../models/hotel";
+import verifyToken from "../middleware/auth";
+import { body } from "express-validator";
 
 const router = express.Router();
 
@@ -15,6 +17,22 @@ const upload = multer({
 // api/my-hotels
 router.post(
   "/",
+  verifyToken,
+  [
+    body("name").notEmpty().withMessage("Name is Required"),
+    body("city").notEmpty().withMessage("City is Required"),
+    body("country").notEmpty().withMessage("Country is Required"),
+    body("description").notEmpty().withMessage("Description is Required"),
+    body("type").notEmpty().withMessage("Hotel type is Required"),
+    body("pricePerNight")
+      .notEmpty()
+      .isNumeric()
+      .withMessage("Price per night is Required (Number)"),
+    body("facilites")
+      .notEmpty()
+      .isArray()
+      .withMessage("Facilities are Required"),
+  ],
   upload.array("imageFiles", 6),
   async (req: Request, res: Response) => {
     console.log("The request for your own sanity: ", req);
@@ -48,3 +66,5 @@ router.post(
     }
   }
 );
+
+export default router;
