@@ -28,7 +28,7 @@ router.post(
       .notEmpty()
       .isNumeric()
       .withMessage("Price per night is Required (Number)"),
-    body("facilites")
+    body("facilities")
       .notEmpty()
       .isArray()
       .withMessage("Facilities are Required"),
