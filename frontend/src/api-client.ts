@@ -69,9 +69,9 @@ export const addMyHotel = async (hotelFormData: FormData) => {
     credentials: "include",
     body: hotelFormData,
   });
-  console.log(response);
+  console.log("Hotel form data: ", hotelFormData);
   if (!response.ok) {
-    throw new Error("Failed to add Hotel");
+    throw new Error("Failed to add Hotel frontend");
   }
 
   return response.json();

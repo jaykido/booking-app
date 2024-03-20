@@ -35,15 +35,16 @@ router.post(
   ],
   upload.array("imageFiles", 6),
   async (req: Request, res: Response) => {
-    console.log("The request for your own sanity: ", req);
+    console.log("The request Body for your own sanity: ", req.body);
     try {
       const imageFiles = req.files as Express.Multer.File[];
       const newHotel: HotelType = req.body;
+      console.log("The Image files for your own sanity: ", imageFiles);
 
       //   1. Upload Images to Cloudinary
       const uploadPromises = imageFiles.map(async (image) => {
         const b64 = Buffer.from(image.buffer).toString("base64");
-        let dataURI = "data:" + image.mimetype + ";base64" + b64;
+        let dataURI = "data:" + image.mimetype + ";base64," + b64;
         const res = await cloudinary.v2.uploader.upload(dataURI);
         return res.url;
       });
@@ -61,7 +62,6 @@ router.post(
       //   4. return a 201 status
       res.status(201).send(hotel);
     } catch (error) {
-      console.log("Error Creating hotels: ", error);
       res.status(500).json({ message: "Something Went wrong" });
     }
   }
