@@ -35,11 +35,11 @@ router.post(
   ],
   upload.array("imageFiles", 6),
   async (req: Request, res: Response) => {
-    console.log("The request Body for your own sanity: ", req.body);
+    // console.log("The request Body for your own sanity: ", req.body);
     try {
       const imageFiles = req.files as Express.Multer.File[];
       const newHotel: HotelType = req.body;
-      console.log("The Image files for your own sanity: ", imageFiles);
+      // console.log("The Image files for your own sanity: ", imageFiles);
 
       //   1. Upload Images to Cloudinary
       const uploadPromises = imageFiles.map(async (image) => {
@@ -66,5 +66,14 @@ router.post(
     }
   }
 );
+
+router.get("/", verifyToken, async (req: Request, res: Response) => {
+  try {
+    const hotels = await Hotel.find({ userId: req.userId });
+    res.json(hotels);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching hotels" });
+  }
+});
 
 export default router;

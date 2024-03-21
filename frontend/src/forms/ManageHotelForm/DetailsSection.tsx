@@ -60,7 +60,7 @@ const DetailsSection = () => {
       </label>
       <div className="flex gap-10 ">
         <label className="text-gray-700 text-sm font-bold flex-1">
-          Price Per Night
+          Price Per Night (Ksh)
           <input
             type="number"
             min={1}
