@@ -8,6 +8,7 @@ test.beforeEach(async ({ page }) => {
 
   // Get the sign in button
 
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   await page.getByRole("link", { name: "Sign-In" }).click();
 
   await expect(page.getByRole("heading", { name: "Sign In" })).toBeVisible();
@@ -22,6 +23,7 @@ test.beforeEach(async ({ page }) => {
 
 test("should allow user to add a new hotel", async ({ page }) => {
   await page.goto(`${UI_URL}/add-hotel`);
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   await page.locator(`[name="name"]`).fill("Test Hotel");
   await page.locator(`[name="city"]`).fill("Test City");
   await page.locator(`[name="country"]`).fill("Test country");
@@ -44,6 +46,8 @@ test("should allow user to add a new hotel", async ({ page }) => {
   ]);
 
   await page.getByRole("button", { name: "Save" }).click();
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
   await expect(page.getByText("Hotel Saved")).toBeVisible();
 
   await page.reload();
@@ -51,6 +55,7 @@ test("should allow user to add a new hotel", async ({ page }) => {
 
 test("should display hotel", async ({ page }) => {
   await page.goto(`${UI_URL}/my-hotels`);
+  await new Promise((resolve) => setTimeout(resolve, 5000));
   await expect(page.getByText("Test Hotel")).toBeVisible();
   await expect(page.getByText("This is the Test description")).toBeVisible();
   await expect(page.getByText(`Test City,Test country`)).toBeVisible();
@@ -73,6 +78,7 @@ test("should edit hotel", async ({ page }) => {
   await expect(page.locator('[name="name"]')).toHaveValue("Test Hotel");
   await page.locator('[name="name"]').fill("Ugali Mayai");
   await page.getByRole("button", { name: "Save" }).click();
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   await expect(page.getByText("Hotel Saved!")).toBeVisible();
 
   await page.reload();
