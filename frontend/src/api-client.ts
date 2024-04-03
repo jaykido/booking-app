@@ -134,7 +134,7 @@ export const searchHotels = async (
 ): Promise<HotelSearchResponse> => {
   const queryParams = new URLSearchParams();
   queryParams.append("destination", SearchParams.destination || "");
-  queryParams.append("chechIn", SearchParams.checkIn || "");
+  queryParams.append("checkIn", SearchParams.checkIn || "");
   queryParams.append("checkOut", SearchParams.checkOut || "");
   queryParams.append("adultCount", SearchParams.adultCount || "");
   queryParams.append("childCount", SearchParams.childCount || "");
